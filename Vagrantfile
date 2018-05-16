@@ -6,67 +6,84 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
+  	config.vm.define "fubuntuone", primary: true do |fubuntuone|
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "bento/ubuntu-17.10"
-  config.vm.hostname ="Deeplearning"
+		fubuntuone.vm.box = "bento/ubuntu-17.10"
+  		fubuntuone.vm.hostname ="fubuntuone"
+  		fubuntuone.vm.network "forwarded_port", guest: 8000, host: 9001,
+    			auto_correct: true
+  		fubuntuone.vm.network "forwarded_port", guest: 8080, host: 9002,
+    			auto_correct: true  
+  		fubuntuone.vm.network "forwarded_port", guest: 4004, host: 9003,
+    			auto_correct: true
+  		fubuntuone.vm.network "forwarded_port", guest: 4001, host: 9004,
+    			auto_correct: true
+  		fubuntuone.vm.network "forwarded_port", guest: 5001, host: 9005,
+    			auto_correct: true
+  		fubuntuone.vm.network "forwarded_port", guest: 9006, host: 9006,
+    			auto_correct: true
 
+		fubuntuone.vm.provision "shell", inline: <<-SHELL
+			sudo apt-get update
+			sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+			curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+			sudo apt-key fingerprint 0EBFCD88
 
-  # Disable automatic box update checking. If you disable this, then
-  # boxes will only be checked for updates when the user runs
-  # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
+			sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu zesty stable"
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 8000, host: 9001,
-    auto_correct: true
-  config.vm.network "forwarded_port", guest: 8080, host: 9002,
-    auto_correct: true  
-  config.vm.network "forwarded_port", guest: 4004, host: 9003,
-    auto_correct: true
+			sudo apt-get -y update
+			sudo apt-get -y install docker-ce
+			sudo apt-get -y install wget curl git python-pip
+			sudo pip install virtualenv 
+			sudo curl -O https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz
+			sudo tar -xvf go1.9.1.linux-amd64.tar.gz
+			sudo mv go /usr/local
+			echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
+			source ~/.bashrc
+			go version 
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+			wget https://dist.ipfs.io/go-ipfs/v0.4.15/go-ipfs_v0.4.15_linux-amd64.tar.gz
+			tar xvfz go-ipfs_v0.4.15_linux-amd64.tar.gz
+			cd go-ipfs
+			sudo ./install.sh
+			ipfs init
+			ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/9006
 
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
+			wget https://sawtooth.hyperledger.org/docs/core/releases/1.0.1/app_developers_guide/sawtooth-default.yaml
+			sudo service docker start
+			
+			sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+			sudo chmod +x /usr/local/bin/docker-compose
+			echo "This is the docker compose version"
+			sudo docker-compose --version
+			sudo docker-compose -f sawtooth-default.yaml up -d
+			
+		SHELL
 
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
-  #config.vm.synced_folder "/home/feynman/VirtualmachinesFolders", "/home"
+	end
 
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
+  	config.vm.define "fubuntutwo", autostart: false do |fubuntutwo|
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+		f-ubuntutwo.vm.box = "bento/ubuntu-17.10"
+  		fubuntutwo.vm.hostname ="fubuntutwo"
+  		fubuntutwo.vm.network "forwarded_port", guest: 8000, host: 9001,
+    			auto_correct: true
+  		fubuntutwo.vm.network "forwarded_port", guest: 8080, host: 9002,
+    			auto_correct: true  
+  		fubuntutwo.vm.network "forwarded_port", guest: 4004, host: 9003,
+    			auto_correct: true
+	end
+
+  	config.vm.define "fclientone", autostart: false do |fclientone|
+
+		fclientone.vm.box = "alipne/alpine64"
+  		fclientone.vm.hostname ="fclientone"
+  		fclientone.vm.network "forwarded_port", guest: 8000, host: 9001,
+    			auto_correct: true
+  		fclientone.vm.network "forwarded_port", guest: 8080, host: 9002,
+    			auto_correct: true  
+  		fclientone.vm.network "forwarded_port", guest: 4004, host: 9003,
+    			auto_correct: true
+	end
+
 end
