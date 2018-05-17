@@ -10,9 +10,10 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   	config.vm.define "fubuntuone", primary: true do |fubuntuone|
 
-		fubuntuone.vm.box = "bento/ubuntu-17.10"
+		fubuntuone.vm.box = "ubuntu/xenial64"
   		fubuntuone.vm.hostname ="fubuntuone"
-  		fubuntuone.vm.network "forwarded_port", guest: 8000, host: 9001,
+		fubuntuone.vm.network :public_network
+		fubuntuone.vm.network "forwarded_port", guest: 8000, host: 9001,
     			auto_correct: true
   		fubuntuone.vm.network "forwarded_port", guest: 8080, host: 9002,
     			auto_correct: true  
@@ -24,13 +25,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     			auto_correct: true
   		fubuntuone.vm.network "forwarded_port", guest: 9006, host: 9006,
     			auto_correct: true
+  		
+		#BIchain DB ports 
+		fubuntuone.vm.network "forwarded_port", guest: 58080, host: 58080,
+    			auto_correct: true
+  		fubuntuone.vm.network "forwarded_port", guest: 59984, host: 59984,
+    			auto_correct: true
 
 		fubuntuone.vm.provision :shell, :privileged => false, :path => "bootstrap_ubuntu.sh"
+		fubuntuone.vm.provider :virtualbox do |vb|
+			vb.gui = false # change to `true` if you get "Error: Connection timeout." while booting
+			vb.memory = 4096 # warning: this is higher than what our production server has
+			vb.cpus = 2
+			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+			vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+		end
+
 	end
 
   	config.vm.define "fubuntutwo", autostart: false do |fubuntutwo|
 
-		fubuntutwo.vm.box = "bento/ubuntu-17.10"
+		fubuntutwo.vm.box = "ubuntu/xenial64"
   		fubuntutwo.vm.hostname ="fubuntutwo"
   		fubuntutwo.vm.network "forwarded_port", guest: 8000, host: 9001,
     			auto_correct: true
