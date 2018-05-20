@@ -7,14 +7,14 @@ from __future__ import with_statement
 from fabric.api import *
 from contextlib import contextmanager as _contextmanager
 from fabric.api import settings
-
+env.warn_only = True # if you want to ignore exceptions and handle them yurself
 
 env.use_ssh_config = True
-env.hosts = ['192.168.1.16']
+env.hosts = ['192.168.1.17']
 env.user = 'vagrant'
 env.colorize_errors = True
 #env.key_filename = '/home/feynman/VirtualMachines/.vagrant/machines/fubuntuone/virtualbox/private_key'
-env.key_filename = '/home/feynman/VirtualMachines/.vagrant/machines/fubuntutwo/virtualbox/private_key'
+env.key_filename = '/home/feynman/VirtualMachines/.vagrant/machines/fubuntuthree/virtualbox/private_key'
 
 
 env.directory = '/home/vagrant/feynmen-base'
@@ -31,6 +31,21 @@ def virtualenv():
 
 
 
+def ipfs_cluster():
+    run("wget https://dist.ipfs.io/ipfs-cluster-service/v0.4.0-rc1/ipfs-cluster-service_v0.4.0-rc1_linux-amd64.tar.gz")
+    run("tar xvzf ipfs-cluster-service_v0.4.0-rc1_linux-amd64.tar.gz")
+    run("rm ipfs-cluster-service_v0.4.0-rc1_linux-amd64.tar.gz")
+    run("sudo mv ipfs-cluster-service/ipfs-cluster-service /usr/local/bin")
+    run("rm -rf ipfs-cluster-service")
+    run("wget https://dist.ipfs.io/ipfs-cluster-ctl/v0.3.5/ipfs-cluster-ctl_v0.3.5_linux-amd64.tar.gz")
+    run("tar xvfz ipfs-cluster-ctl_v0.3.5_linux-amd64.tar.gz")
+    run("rm ipfs-cluster-ctl_v0.3.5_linux-amd64.tar.gz")
+    run("sudo mv ipfs-cluster-ctl/ipfs-cluster-ctl /usr/local/bin")
+    run("rm -rf ipfs-cluster-ctl")
+
+
+
+
 def python_packages():
     with virtualenv():
         run("pip freeze") 
@@ -40,11 +55,11 @@ def python_packages():
 def install_packages():
     run("sudo apt-get -y update")
     run("sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common\
-            libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev\
+            libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libssl-dev libffi-dev\
             g++ python3-dev wget curl git python-pip python3-setuptools")
 
-    run("sudo easy_install3 pip")
-    run("sudo pip3 install --upgrade pip wheel setuptools")
+    #run("sudo easy_install3 pip")
+    #run("sudo pip3 install --upgrade pip wheel setuptools")
     run("echo 'alias python=python3' >> ~/.bashrc")
     run("sudo pip install virtualenv")
 
@@ -57,6 +72,7 @@ def install_git_venv():
 
 
 def install_go():
+    """
     run("sudo curl -O https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz")
     run("sudo tar -xvf go1.9.1.linux-amd64.tar.gz")
     with hide('output'):
@@ -65,7 +81,11 @@ def install_go():
     #run("exec bash")
     with settings(warn_only=True):
         run("go version") ##this could fail 
-
+    """
+    run("sudo apt install golang -y")
+    run("'echo GOROOT=/usr/lib/go' >> ~/.bashrc")
+    run("'export GOPATH=$HOME/go' >> ~/.bashrc")
+    run("'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin' >> ~/.bashrc")
 
 
 
@@ -94,16 +114,24 @@ def install_other():
 
 def install_ipfs():
 
-    #run('wget https://dist.ipfs.io/go-ipfs/v0.4.15/go-ipfs_v0.4.15_linux-amd64.tar.gz')
-    run('wget https://s3.ap-south-1.amazonaws.com/feynmenpublic/go-ipfs_v0.4.15_linux-amd64.tar.gz')
+    run('wget https://dist.ipfs.io/go-ipfs/v0.4.15/go-ipfs_v0.4.15_linux-amd64.tar.gz')
+    #run('wget https://s3.ap-south-1.amazonaws.com/feynmenpublic/go-ipfs_v0.4.15_linux-amd64.tar.gz')
     run('tar xvfz go-ipfs_v0.4.15_linux-amd64.tar.gz')
     with cd('go-ipfs'):
         run("sudo ./install.sh")
         run("sudo apt-get -y install fuse") 
-        run("sudo groupadd fuse")
-        run("sudo usermod -aG fuse $(whoami)")
+        with settings(warn_only=True):
+            result = run("sudo groupadd fuse")
+            if result.return_code == 0: 
+                run("sudo usermod -aG fuse $(whoami)")
+            else: 
+                print ("Fuse user already exists")
+
     run("ipfs init")
     ##this changes dafualt port of IPFs from 8080 to 9001
+    run("ipfs daemon&")
+    run("ipfs swarm peers")
+    run("cat ~/.ipfs/config")
     run("ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/9001")
 
 
@@ -129,6 +157,10 @@ def install_bigchaindb():
        
     run("rethinkdb --daemon")
     run("bigchaindb -y configure rethinkdb")
+    run("bigchaindb start&")
+    ##If the content is not available locally, THe ipfs will download the content
+    ## and store it locally.
+    run(" ipfs cat /ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme")
     #run("bigchaindb set-replicas 3")
 
 
@@ -141,20 +173,17 @@ def install_sawtooth():
 
 
 def deploy():
-    """
-    install_packages()
-    install_go()
-    install_git_venv()
-    python_packages()
-    install_other()
-    install_ipfs()
-    install_bigchaindb()
-    install_sawtooth()
-
+    #install_packages()
+    #install_go()
+    #install_git_venv()
+    #python_packages()
+    #install_other()
+    #install_ipfs()
+    #install_bigchaindb()
+    #install_sawtooth()
+    ipfs_cluster()
     ##commands you need to run yourself
-    run("nohup bash -c 'bigchaindb start' > bigchaindb.log",  pty=False)
-    """
-    run("nohup bash -c 'ipfs daemon' > ipfs.log",  pty=False)
+    #run("nohup bash -c 'ipfs daemon' > ipfs.log",  pty=False)
 
 
 
