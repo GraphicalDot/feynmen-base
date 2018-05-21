@@ -4,3 +4,7 @@ include/
 local/
 share/
 .vagrant/
+.py.swp
+.py.swc
+__pycache__/
+.vscode/
