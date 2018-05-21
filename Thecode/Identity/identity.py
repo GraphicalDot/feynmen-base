@@ -8,8 +8,11 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.serialization import load_pem_private_key, load_pem_public_key
 import base64
 import ipfsapi
+import json
+import os
 ##https://media.readthedocs.org/pdf/python-ipfs-api/latest/python-ipfs-api.pdf
 
 
@@ -21,13 +24,14 @@ class GenerateKeys(object):
         self.public_key_str = None
         self.private_key = None 
         self.public_key = None
+        self.private_filename = "privatekey.pem"
+        self.public_filename = "publickey.pem"
 
     def generate_keys(self):
         """
         Generate public privatekeys
 
         https://sawtooth.hyperledger.org/docs/core/releases/1.0/_autogen/sdk_submit_tutorial_python.html
-        """
 
         context = create_context('secp256k1')
         private_key = context.new_random_private_key()
@@ -37,22 +41,32 @@ class GenerateKeys(object):
         self.signer_public_key=signer.get_public_key().as_hex(),
         return (private_key_hex, signer_public_key)
 
+        """
 
         # generate private/public key pair
         self.private_key = rsa.generate_private_key(backend=default_backend(), public_exponent=65537, key_size=2048)
 
         # get public key in OpenSSH format
         self.public_key = self.private_key.public_key()
-        
-        
+
+
         pem_public = self.public_key.public_bytes(serialization.Encoding.OpenSSH, serialization.PublicFormat.OpenSSH)
 
         # get private key in PEM container format
         pem = self.private_key.private_bytes(encoding=serialization.Encoding.PEM, 
-                        format=serialization.PrivateFormat.TraditionalOpenSSL,
-                        encryption_algorithm=serialization.NoEncryption())
+        format=serialization.PrivateFormat.TraditionalOpenSSL,
+        encryption_algorithm=serialization.NoEncryption())
 
-        # decode to printable strings
+        with open(self.private_filename, 'wb') as pem_out:
+                pem_out.write(pem)
+
+        with open(self.public_filename, 'wb') as pem_out:
+                pem_out.write(pem_public)
+
+
+
+
+	    # decode to printable strings
         self.private_key_str = pem.decode('utf-8')
         self.public_key_str = pem_public.decode('utf-8')
 
@@ -62,12 +76,23 @@ class GenerateKeys(object):
         print(self.public_key_str)
 
 
-    def load_public_private_keys(self):
-        ##load public and private keys from BIGchainB
-        return 
 
-    #https://medium.com/@raul_11817/rsa-with-cryptography-python-library-462b26ce4120
+
+    def load_private_key(filename):
+        with open(self.private_filename, 'rb') as pem_in:
+            pemlines = pem_in.read()
+        private_key = load_pem_private_key(pemlines, None, default_backend())
+        return private_key
+
+    def load_public_key(self):
+        with open(self.public_filename, 'rb') as pem_in:
+            pemlines = pem_in.read()
+        public_key = load_pem_private_key(pemlines, None, default_backend())
+        return private_key
+
     def encrypt_object(self, message):
+    	#https://medium.com/@raul_11817/rsa-with-cryptography-python-library-462b26ce4120
+        message = message.encode('ascii')
         ciphertext = self.public_key.encrypt(
             message,
             padding.OAEP(
@@ -123,9 +148,10 @@ class StoreDetails(object):
 
 
         api = ipfsapi.connect('127.0.0.1', 5001)
-        res = api.add_json({"cipher_text": data["cipher_text"], "signature": data["signature"]})
+        res = api.add_json({"cipher_text": data[0], "signature": data[1]})
         ##res{'Hash': 'QmWxS5aNTFEc9XbMX1ASvLET1zrqEaTssqt33rVZQCQb22', 'Name': 'test.txt'}
         print (res)
+        return res
 
 
 
@@ -165,5 +191,6 @@ if __name__ == "__main__":
     _instance = GenerateKeys()
     _instance.generate_keys()
     (ciphertext, signature) = _instance.encrypt_object("hey now, Dude how are you")
-    StoreDetails.storedetails((ciphertext, signature))
+    print (ciphertext, signature)
+    ipfs_object_hash = StoreDetails.storedetails((ciphertext, signature))
 
