@@ -10,11 +10,11 @@ from fabric.api import settings
 env.warn_only = True # if you want to ignore exceptions and handle them yurself
 
 env.use_ssh_config = True
-env.hosts = ['192.168.1.17']
+env.hosts = ['192.168.1.15']
 env.user = 'vagrant'
 env.colorize_errors = True
 #env.key_filename = '/home/feynman/VirtualMachines/.vagrant/machines/fubuntuone/virtualbox/private_key'
-env.key_filename = '/home/feynman/VirtualMachines/.vagrant/machines/fubuntuthree/virtualbox/private_key'
+env.key_filename = '/home/feynman/VirtualMachines/.vagrant/machines/fubuntuone/virtualbox/private_key'
 
 
 env.directory = '/home/vagrant/feynmen-base'
@@ -31,6 +31,8 @@ def virtualenv():
 
 
 
+##this function shouldnt be use, We dont have any use of IPFS cluster and its now experimental, 
+##instead we should use IPFS private or IPFs pub sub
 def ipfs_cluster():
     run("wget https://dist.ipfs.io/ipfs-cluster-service/v0.4.0-rc1/ipfs-cluster-service_v0.4.0-rc1_linux-amd64.tar.gz")
     run("tar xvzf ipfs-cluster-service_v0.4.0-rc1_linux-amd64.tar.gz")
@@ -136,7 +138,7 @@ def install_ipfs():
 
 
 
-
+# python transactions.py --settings=project_settingss
 def install_bigchaindb():
     ##delete pkg_resource from the requirements.txt file
 
@@ -173,17 +175,17 @@ def install_sawtooth():
 
 
 def deploy():
-    #install_packages()
-    #install_go()
-    #install_git_venv()
-    #python_packages()
-    #install_other()
-    #install_ipfs()
-    #install_bigchaindb()
-    #install_sawtooth()
-    ipfs_cluster()
+    install_packages()
+    install_go()
+    install_git_venv()
+    python_packages()
+    install_other()
+    install_ipfs()
+    install_bigchaindb()
+    install_sawtooth()
+    #ipfs_cluster()
     ##commands you need to run yourself
-    #run("nohup bash -c 'ipfs daemon' > ipfs.log",  pty=False)
+    run("ipfs daemon&")
 
 
 
