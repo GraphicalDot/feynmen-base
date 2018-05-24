@@ -7,13 +7,6 @@ sys.path.append(os.path.dirname(file_name))
 
 
 
-import logging
-logger = logging.getLogger('my_project')
-
-
-logger.info('Hello')
-
-
 
 ##https://test.bigchaindb.com/api/v1/
 ##we going to use the bigchaindb testnet for the time being, Till the time we create our own 

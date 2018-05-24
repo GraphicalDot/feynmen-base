@@ -1,0 +1,92 @@
+2018-05-25 03:18:29,575 - root - INFO - Application server started on 8888
+2018-05-25 03:19:40,372 - root - INFO - stopping server dude
+2018-05-25 03:19:41,456 - root - INFO - Application server started on 8888
+2018-05-25 03:20:31,531 - root - ERROR - Error occurred
+2018-05-25 03:20:31,532 - tornado.access - INFO - 304 GET / (127.0.0.1) 1.58ms
+2018-05-25 03:23:58,633 - root - INFO - stopping server dude
+2018-05-25 03:23:59,577 - root - INFO - Application server started on 8888
+2018-05-25 03:24:07,058 - root - ERROR - Error occurred
+2018-05-25 03:24:07,059 - tornado.access - INFO - 304 GET / (127.0.0.1) 0.96ms
+2018-05-25 03:26:31,347 - tornado.access - INFO - 200 GET /login (::1) 0.58ms
+2018-05-25 03:27:25,726 - root - INFO - stopping server dude
+2018-05-25 03:27:27,123 - root - INFO - Application server started on 8888
+2018-05-25 03:27:31,418 - tornado.access - WARNING - 401 GET /login (::1) 0.70ms
+2018-05-25 03:28:26,791 - tornado.application - ERROR - Uncaught exception POST /login (::1)
+HTTPServerRequest(protocol='http', host='localhost:8888', method='POST', uri='/login', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/web.py", line 1543, in _execute
+    result = yield result
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 1099, in run
+    value = future.result()
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 1187, in handle_yield
+    self.future = convert_yielded(yielded)
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/functools.py", line 803, in wrapper
+    return dispatch(args[0].__class__)(*args, **kw)
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 1329, in convert_yielded
+    raise BadYieldError("yielded unknown object %r" % (yielded,))
+tornado.gen.BadYieldError: yielded unknown object <generator object post at 0x7fc8117ab1a8>
+2018-05-25 03:28:26,805 - tornado.access - ERROR - 500 POST /login (::1) 14.51ms
+2018-05-25 03:30:09,553 - root - INFO - stopping server dude
+2018-05-25 03:30:10,527 - root - INFO - Application server started on 8888
+2018-05-25 03:30:22,353 - root - INFO - stopping server dude
+2018-05-25 03:31:04,887 - root - INFO - Application server started on 8888
+2018-05-25 03:31:14,170 - root - INFO - stopping server dude
+2018-05-25 03:31:15,186 - root - INFO - Application server started on 8888
+2018-05-25 03:31:29,506 - tornado.application - ERROR - Uncaught exception POST /login (::1)
+HTTPServerRequest(protocol='http', host='localhost:8888', method='POST', uri='/login', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/web.py", line 1543, in _execute
+    result = yield result
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 1099, in run
+    value = future.result()
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 1187, in handle_yield
+    self.future = convert_yielded(yielded)
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/functools.py", line 803, in wrapper
+    return dispatch(args[0].__class__)(*args, **kw)
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 1329, in convert_yielded
+    raise BadYieldError("yielded unknown object %r" % (yielded,))
+tornado.gen.BadYieldError: yielded unknown object <generator object post at 0x7fcbde7112b0>
+2018-05-25 03:31:29,508 - tornado.access - ERROR - 500 POST /login (::1) 2.73ms
+2018-05-25 03:32:00,235 - root - INFO - stopping server dude
+2018-05-25 03:32:01,590 - root - INFO - Application server started on 8888
+2018-05-25 03:32:04,671 - tornado.application - ERROR - Uncaught exception POST /login (::1)
+HTTPServerRequest(protocol='http', host='localhost:8888', method='POST', uri='/login', version='HTTP/1.1', remote_ip='::1')
+Traceback (most recent call last):
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/web.py", line 1543, in _execute
+    result = yield result
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 1099, in run
+    value = future.result()
+  File "/home/feynman/Programs/feynmen-base/lib/python3.6/site-packages/tornado/gen.py", line 315, in wrapper
+    yielded = next(result)
+  File "/home/feynman/Programs/feynmen-base/LoginModule/login.py", line 55, in post
+    password = post_arguments.get("password", None)
+NameError: name 'post_arguments' is not defined
+2018-05-25 03:32:04,672 - tornado.access - ERROR - 500 POST /login (::1) 2.23ms
+2018-05-25 03:32:41,186 - root - INFO - stopping server dude
+2018-05-25 03:32:41,401 - root - INFO - stopping server dude
+2018-05-25 03:32:44,373 - root - INFO - Application server started on 8888
+2018-05-25 03:32:49,805 - root - ERROR - MotorCollection object is not callable. If you meant to call the 'find_one' method on a MotorCollection object it is failing because no such method exists.
+2018-05-25 03:32:49,806 - tornado.access - WARNING - 401 POST /login (::1) 1.53ms
+2018-05-25 03:34:24,771 - root - INFO - stopping server dude
+2018-05-25 03:34:25,709 - root - INFO - Application server started on 8888
+2018-05-25 03:34:28,974 - root - ERROR - MotorCollection object is not callable. If you meant to call the 'find_one' method on a MotorCollection object it is failing because no such method exists.
+2018-05-25 03:34:28,975 - tornado.access - WARNING - 401 POST /login (::1) 2.53ms
+2018-05-25 03:35:52,389 - root - INFO - stopping server dude
+2018-05-25 03:35:52,615 - root - INFO - stopping server dude
+2018-05-25 03:35:53,480 - root - INFO - Application server started on 8888
+2018-05-25 03:35:56,644 - root - ERROR - MotorCollection object is not callable. If you meant to call the 'find_one' method on a MotorCollection object it is failing because no such method exists.
+2018-05-25 03:35:56,645 - tornado.access - WARNING - 401 POST /login (::1) 1.47ms
+2018-05-25 03:36:08,358 - root - INFO - stopping server dude
+2018-05-25 03:36:09,235 - root - INFO - Application server started on 8888
+2018-05-25 03:36:12,828 - root - ERROR - MotorCollection object is not callable. If you meant to call the 'find_one' method on a MotorCollection object it is failing because no such method exists.
+2018-05-25 03:36:12,830 - tornado.access - WARNING - 401 POST /login (::1) 2.65ms
+2018-05-25 03:36:57,140 - root - INFO - stopping server dude
+2018-05-25 03:36:57,921 - root - INFO - Application server started on 8888
+2018-05-25 03:37:02,268 - root - ERROR - MotorCollection object is not callable. If you meant to call the 'find_one' method on a MotorCollection object it is failing because no such method exists.
+2018-05-25 03:37:02,269 - tornado.access - WARNING - 401 POST /login (::1) 2.30ms
+2018-05-25 03:42:33,783 - root - INFO - stopping server dude
+2018-05-25 03:42:34,007 - root - INFO - stopping server dude
+2018-05-25 03:42:34,818 - root - INFO - Application server started on 8888
+2018-05-25 03:42:38,382 - root - ERROR - user doesnt exist
+2018-05-25 03:42:38,383 - tornado.access - WARNING - 401 POST /login (::1) 6.55ms
+2018-05-25 04:08:51,781 - root - INFO - stopping server dude
