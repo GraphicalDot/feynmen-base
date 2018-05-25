@@ -1,6 +1,5 @@
 
-from faker import Faker
-fake = Faker()
+
 from sawtooth_signing import create_context
 from sawtooth_signing import CryptoFactory
 from cryptography.hazmat.primitives import serialization
@@ -27,7 +26,7 @@ class GenerateKeys(object):
         self.private_filename = "privatekey.pem"
         self.public_filename = "publickey.pem"
 
-    def generate_keys(self):
+    def generate_keys(self, save_keys=False):
         """
         Generate public privatekeys
 
@@ -57,24 +56,28 @@ class GenerateKeys(object):
         format=serialization.PrivateFormat.TraditionalOpenSSL,
         encryption_algorithm=serialization.NoEncryption())
 
-        with open(self.private_filename, 'wb') as pem_out:
+        
+        if save_keys:
+            with open(self.private_filename, 'wb') as pem_out:
                 pem_out.write(pem)
 
-        with open(self.public_filename, 'wb') as pem_out:
+            with open(self.public_filename, 'wb') as pem_out:
                 pem_out.write(pem_public)
+    	    # decode to printable strings
+            self.private_key_str = pem.decode('utf-8')
+            self.public_key_str = pem_public.decode('utf-8')
+            
+            print('Private key = ')
+            print(self.private_key_str)
+            print('Public key = ')
+            print(self.public_key_str)
+
+        return (pem, pem_public)
 
 
 
 
-	    # decode to printable strings
-        self.private_key_str = pem.decode('utf-8')
-        self.public_key_str = pem_public.decode('utf-8')
-
-        print('Private key = ')
-        print(self.private_key_str)
-        print('Public key = ')
-        print(self.public_key_str)
-
+        
 
 
 
@@ -90,10 +93,12 @@ class GenerateKeys(object):
         public_key = load_pem_private_key(pemlines, None, default_backend())
         return private_key
 
-    def encrypt_object(self, message):
+
+    @staticmethod
+    def encrypt_json(self, message, private_key, public_key):
     	#https://medium.com/@raul_11817/rsa-with-cryptography-python-library-462b26ce4120
         message = message.encode('ascii')
-        ciphertext = self.public_key.encrypt(
+        ciphertext = public_key.encrypt(
             message,
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA1()),
@@ -106,7 +111,7 @@ class GenerateKeys(object):
 
         data_to_sign = bytes(message, encoding='utf8') if not isinstance(message, bytes) else message
 
-        signer = self.private_key.signer(
+        signer = private_key.signer(
             padding.PSS(
                 mgf=padding.MGF1(hashes.SHA256()),
                 salt_length=padding.PSS.MAX_LENGTH
@@ -132,26 +137,6 @@ class GenerateKeys(object):
 
 
 
-class StoreDetails(object):
-    ##https://github.com/ipfs/py-ipfs-api
-    
-    
-    @staticmethod
-    def storedetails(data):
-        """
-        Store the Identity encrypted with Public key 
-        and hashes signed by digital signature and store them on blockchainDB.
-        TODO: Encrypt this data, with the public key of this user, May be bigchaindb public key of this user
-        TODO: You somehow force this file to be stored by atleast three other peers. If one of the peer goes down
-            It should stores all the files to some other peers.
-        """
-
-
-        api = ipfsapi.connect('127.0.0.1', 5001)
-        res = api.add_json({"cipher_text": data[0], "signature": data[1]})
-        ##res{'Hash': 'QmWxS5aNTFEc9XbMX1ASvLET1zrqEaTssqt33rVZQCQb22', 'Name': 'test.txt'}
-        print (res)
-        return res
 
 
 

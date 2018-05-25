@@ -58,7 +58,8 @@ def install_packages():
     run("sudo apt-get -y update")
     run("sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common\
             libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libssl-dev libffi-dev\
-            g++ python3-dev wget curl git python-pip python3-setuptools")
+            g++ python3-dev wget curl git python-pip python3-setuptools sudo apt-get install python3 python-dev python3-dev build-essential\
+            libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev libglu1-mesa-dev freeglut3-dev mesa-common-dev")
 
     #run("sudo easy_install3 pip")
     #run("sudo pip3 install --upgrade pip wheel setuptools")
@@ -134,8 +135,14 @@ def install_ipfs():
     run("ipfs daemon&")
     run("ipfs swarm peers")
     run("cat ~/.ipfs/config")
-    run("ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/9001")
 
+    ##these two lines are very important as these are needed foir the 
+    ## nodes on communicate on local network. 
+    run("ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/9001")
+    run("ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001")
+    run("ipfs config --json Experimental.FilestoreEnabled true")
+
+And then pass the --nocopy flag when running ipfs add
 
 
 # python transactions.py --settings=project_settingss
