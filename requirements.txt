@@ -15,7 +15,9 @@ coloredlogs==10.0
 colorlog==3.1.4
 cryptoconditions==0.6.0.dev1
 cryptography==1.9
+Cython==0.25.2
 decorator==4.3.0
+docutils==0.14
 enum34==1.1.6
 Fabric3==1.14.post1
 Faker==0.8.15
@@ -32,6 +34,8 @@ ipython-genutils==0.2.0
 itsdangerous==0.24
 Jinja2==2.10
 jsonschema==2.5.1
+Kivy==1.10.0
+Kivy-Garden==0.1.4
 logstats==0.2.1
 MarkupSafe==1.0
 motor==1.2.2

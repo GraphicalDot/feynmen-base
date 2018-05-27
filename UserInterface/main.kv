@@ -1,0 +1,73 @@
+#:kivy 1.10.0
+#:include userpage.kv
+#:include user_registration.kv
+
+
+<LoginPage>:
+    BoxLayout:
+        spacing: 0
+        orientation: "horizontal"
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1,1
+            canvas:
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            AsyncImage
+                source: '/home/feynman/logo.png'
+
+        
+
+        BoxLayout:
+            padding: 0,0,0,0
+            spacing: 0
+            size_hint: 1,1
+            orientation: "vertical"
+            
+            BoxLayout:
+                spacing: [0, 0]
+                orientation: "vertical"
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 1,0.2
+                    Label:
+                        size_hint: 1,0.2
+                        text: "Username"
+                    TextInput:
+                        id: username
+                        hint_text: "username"
+                        size_hint: 1,0.2
+                        text:''
+                        multiline: False
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 1, 0.2
+                    Label:
+                        size_hint: 1,0.2
+                        text: "Password"
+                    TextInput:
+                        id: password
+                        hint_text: "password"
+                        size_hint: 1,0.2
+                        password: True
+                        text:''
+                        multiline: False
+
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 10,10,10,10
+                spacing: 10
+            
+                Button:
+                    size_hint: 1,0.1
+                    text: "Login"
+                    on_press: root.do_login(username.text, password.text)
+                Button:
+                    size_hint: 1,0.1
+                    text: "Register"
+                    on_press: root.do_registration()
+                Button:
+                    size_hint: 1,0.1
+                    text: "Forgot Password"

@@ -59,7 +59,18 @@ def install_packages():
     run("sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common\
             libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libssl-dev libffi-dev\
             g++ python3-dev wget curl git python-pip python3-setuptools sudo apt-get install python3 python-dev python3-dev build-essential\
-            libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev libglu1-mesa-dev freeglut3-dev mesa-common-dev")
+            libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
+
+    run("ffmpeg \
+        libsdl2-dev \
+        libsdl2-image-dev \
+        libsdl2-mixer-dev \
+        libsdl2-ttf-dev \
+        libportmidi-dev \
+        libswscale-dev \
+        libavformat-dev \
+        libavcodec-dev")
+
 
     #run("sudo easy_install3 pip")
     #run("sudo pip3 install --upgrade pip wheel setuptools")
