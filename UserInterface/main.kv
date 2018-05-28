@@ -1,6 +1,8 @@
 #:kivy 1.10.0
 #:include userpage.kv
 #:include user_registration.kv
+#:include forgot_password.kv
+
 
 
 <LoginPage>:
@@ -70,3 +72,5 @@
                 Button:
                     size_hint: 1,0.1
                     text: "Forgot Password"
+                    on_press: root.do_forgot_password()
+                    

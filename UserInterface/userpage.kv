@@ -1,12 +1,56 @@
 <UserPage>:
     BoxLayout:
-        orientation: 'vertical'
+        padding: [0, 0, 0, 0]
+        spacing: [0, 0]
+        size_hint: 1, 1
+        orientation: "vertical"
+        
 
-        Label:
-            text: "You are now connected"
-            font_size: 32
-        Button:
-            text: "Disconnect"
-            font_size: 24
-            on_press: root.disconnect()
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 1
+            Label:
+                text: "Store data, You can store any file in a decentralize manner, encrypted with your public key"
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
+            
+            Button:
+                size_hint: 1,0.1
+                text: "Cancel"
+                on_press: root.store_data()
 
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 1
+            Label:
+                text: "Create Asset, An asset will be created from the data that has been previously stored"
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
+            
+            Button:
+                size_hint: 1,0.2
+                text: "Cancel"
+                on_press: root.create_asset()
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 1
+            Label:
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
+                text: "Transfer Asset, You can transfer this asset to any other person"
+            Button:
+                size_hint: 1,0.2
+                text: "Cancel"
+                on_press: root.transfer_asset()
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 1
+            Button:
+                size_hint: 1,0.25
+                text: "Cancel"
+                on_press: root.on_cancel()

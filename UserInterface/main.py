@@ -12,6 +12,7 @@ import time
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from userpage import UserPage
 from user_registration import UserRegistration
+from forgot_password import ForgotPassword
 from kivy.storage.jsonstore import JsonStore
 import hashlib
 import six
@@ -70,6 +71,9 @@ class LoginPage(Screen):
         self.manager.transition = SlideTransition(direction="left")
         self.manager.current = 'UserRegistration'    
 
+    def do_forgot_password(self):
+        self.manager.transition = SlideTransition(direction="left")
+        self.manager.current = 'ForgotPassword'    
 
     def resetForm(self):
         self.ids['username'].text = ""
@@ -85,6 +89,7 @@ class MainApp(App):
         manager.add_widget(LoginPage(name='Login'))
         manager.add_widget(UserPage(name='User'))
         manager.add_widget(UserRegistration(name='UserRegistration'))
+        manager.add_widget(ForgotPassword(name='ForgotPassword'))
         print ("This is the username stored in the application", self.username)
         return manager
 

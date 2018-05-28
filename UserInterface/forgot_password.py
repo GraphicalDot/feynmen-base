@@ -11,7 +11,6 @@ class ForgotPassword(Screen):
         """
         Make an api request with the change in password
         After succeful registration reset the form 
-        """
 
         if password != repeat_password:
             raise StandardError("Passwords dont match")
@@ -26,11 +25,23 @@ class ForgotPassword(Screen):
 
 
         if hashlib.sha3_256(password.encode("utf-8")).hexdigest() != old_password:
-            raise StandardError(""*)
+            raise StandardError("")
 
         store.put("credentials", password=hashlib.sha3_256(password.encode("utf-8")).hexdigest())
         self.manager.transition = SlideTransition(direction="right")
         self.manager.current = 'Login'
         self.manager.get_screen('Login').resetForm()
         return         
-            
+        """
+        pass
+
+    def on_cancel(self):
+
+        self.go_to_login()
+
+
+    def go_to_login(self):
+        self.manager.transition = SlideTransition(direction="right")
+        self.manager.current = 'Login'
+        self.manager.get_screen('Login').resetForm()
+        return        
