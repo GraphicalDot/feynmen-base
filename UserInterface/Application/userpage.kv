@@ -1,10 +1,12 @@
+
 <UserPage>:
     BoxLayout:
-        padding: [0, 0, 0, 0]
-        spacing: [0, 0]
+        padding: [20, 20, 20, 20]
+        spacing: [10, 10]
         size_hint: 1, 1
         orientation: "vertical"
-        
+        ListView:
+            item_strings: [str(index) for index in range(100)]
 
         BoxLayout:
             orientation: "horizontal"
@@ -16,8 +18,8 @@
                 height: self.texture_size[1]
             
             Button:
-                size_hint: 1,0.1
-                text: "Cancel"
+                size_hint: 1,0.3
+                text: "Store Data"
                 on_press: root.store_data()
 
         BoxLayout:
@@ -30,8 +32,8 @@
                 height: self.texture_size[1]
             
             Button:
-                size_hint: 1,0.2
-                text: "Cancel"
+                size_hint: 1,0.3
+                text: "Create Asset"
                 on_press: root.create_asset()
 
         BoxLayout:
@@ -43,14 +45,14 @@
                 height: self.texture_size[1]
                 text: "Transfer Asset, You can transfer this asset to any other person"
             Button:
-                size_hint: 1,0.2
-                text: "Cancel"
+                size_hint: 1,0.3
+                text: "Transfer Asset"
                 on_press: root.transfer_asset()
 
         BoxLayout:
             orientation: "horizontal"
             size_hint: 1, 1
             Button:
-                size_hint: 1,0.25
+                size_hint: 1,0.3
                 text: "Cancel"
                 on_press: root.on_cancel()

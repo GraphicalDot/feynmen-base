@@ -10,12 +10,15 @@ from kivy.properties import StringProperty
 from kivy.clock import Clock
 import time
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
-from userpage import UserPage
+from Application.userpage import UserPage
 from user_registration import UserRegistration
 from forgot_password import ForgotPassword
 from kivy.storage.jsonstore import JsonStore
 import hashlib
 import six
+
+
+
 
 
 

@@ -1,8 +1,14 @@
 
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, SlideTransition
+from Application.kivy_table.table import TableView, TableColumn, TableRow, TableCell, CustomTable
+
 
 class UserPage(Screen):
+    def __init__(self, **kwargs):
+        super(UserPage, self).__init__(**kwargs)
+   
+    
     def disconnect(self):
         self.manager.transition = SlideTransition(direction="right")
         self.manager.current = 'Login'
