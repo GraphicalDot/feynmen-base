@@ -10,15 +10,14 @@
         BoxLayout:
             orientation: "vertical"
             size_hint: 1,1
-            canvas:
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            AsyncImage
+
+            Image
                 source: '/home/feynman/logo.png'
-
-        
-
+                mipmap: True
+                width: self.width
+                height: self.height
+                allow_stretch:False
+                keep_ratio:True
         BoxLayout:
             padding: 0,0,0,0
             spacing: 0

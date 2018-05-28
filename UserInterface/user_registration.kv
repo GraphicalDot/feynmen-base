@@ -1,96 +1,153 @@
 #:kivy 1.10.0
 #:include userpage.kv
 
-<LoadDialog>:
-    BoxLayout:
-        size: root.size
-        pos: root.pos
-        orientation: "vertical"
-        FileChooserListView:
-            id: filechooser
-
-        BoxLayout:
-            size_hint_y: None
-            height: 30
-            Button:
-                text: "Cancel"
-                on_release: root.cancel()
-
-            Button:
-                text: "Load"
-                on_release: root.load(filechooser.path, filechooser.selection)
-
-<SaveDialog>:
-    text_input: text_input
-    BoxLayout:
-        size: root.size
-        pos: root.pos
-        orientation: "vertical"
-        FileChooserListView:
-            id: filechooser
-            on_selection: text_input.text = self.selection and self.selection[0] or ''
-
-        TextInput:
-            id: text_input
-            size_hint_y: None
-            height: 30
-            multiline: False
-
-        BoxLayout:
-            size_hint_y: None
-            height: 30
-            Button:
-                text: "Cancel"
-                on_release: root.cancel()
-
-            Button:
-                text: "Save"
-                on_release: root.save(filechooser.path, text_input.text)
 
 
 <UserRegistration>:
     BoxLayout:
-        padding: 0,0,0,0
-        spacing: 0
-        size_hint: 1,1
+        padding: 5,5,5,5
+        spacing: [10, 10]
+        size_hint: 1, 1
         orientation: "vertical"
         
         BoxLayout:
-            spacing: [0, 0]
             orientation: "vertical"
             BoxLayout:
                 orientation: "horizontal"
-                size_hint: 1,0.3
+                size_hint: 1,1
                 Label:
-                    size_hint: 1,0.3
+                    size_hint: 1, 1
                     text: "Username"
                 TextInput:
                     id: username
-                    size_hint: 1,0.3
+                    hint_text: "username"
+                    size_hint: 1, 1
                     text:''
                     multiline: False
 
             BoxLayout:
                 orientation: "horizontal"
-                size_hint: 1, 0.3
+                size_hint: 1, 1
                 Label:
-                    size_hint: 1,0.3
+                    size_hint: 1, 1
                     text: "Password"
                 TextInput:
                     id: password
-                    size_hint: 1,0.3
+                    hint_text: "password"
+                    size_hint: 1, 1
                     password: True
                     text:''
                     multiline: False
+
             BoxLayout:
-                size_hint_y: None
-                height: 30
+                orientation: "horizontal"
+                size_hint: 1, 1
+                Label:
+                    size_hint: 1, 1
+                    text: "Repeat Password"
+                TextInput:
+                    id: repeatpassword
+                    size_hint: 1, 1
+                    hint_text: "repeat password"
+                    password: True
+                    text:''
+                    multiline: False
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 1
+                Label:
+                    size_hint: 1, 1
+                    text: "Email Id"
+                TextInput:
+                    id: emailid
+                    hint_text: "email id"
+                    size_hint: 1, 1
+                    text:''
+                    multiline: False
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 1
+                Label:
+                    size_hint: 1, 1
+                    text: "Phone number"
+                TextInput:
+                    id: phonenumber
+                    hint_text: "phone number"
+                    size_hint: 1, 1
+                    text:''
+                    multiline: False
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 1
+                Label:
+                    size_hint: 1, 1
+                    text: "Adhaar number"
+                TextInput:
+                    id: adhaarnumber
+                    hint_text: "adhaar number"
+                    size_hint: 1, 1
+                    text:''
+                    multiline: False
+
+
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 1
+
+              
+                Label:
+                    size_hint: 1, 1
+                    text: "SocialID front"
+                TextInput:
+                    id: socialidfront
+                    text: root.file
+                    size_hint: 1, 1
+                    multiline: False                    
                 Button:
                     text: 'Load'
-                    on_release: root.show_load()
+                    size_hint: 1, 1
+                    on_press: root.open("socialidfront")
+
+                    
+                
+                    
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 1
+                Label:
+                    size_hint: 1, 1
+                    text: "SocialID back"
+                TextInput:
+                    id:socialidback
+                    text: root.file
+                    size_hint: 1, 1
+                    multiline: False
                 Button:
-                    text: 'Save'
-                    on_release: root.show_save()
+                    text: 'Load'
+                    size_hint: 1, 1
+                    on_press: root.open("socialidback")
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 1
+                Label:
+                    size_hint: 1, 1
+                    text: "self image"
+                TextInput:
+                    id:selfimage
+                    text: root.file
+                    size_hint: 1, 1
+                    multiline: False
+                Button:
+                    text: 'Load'
+                    size_hint: 1, 1
+                    on_press: root.open("selfimage")
+
+
 
         BoxLayout:
             orientation: "horizontal"
