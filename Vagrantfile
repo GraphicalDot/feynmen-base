@@ -12,8 +12,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 		fubuntuone.vm.box = "ubuntu/xenial64"
   		fubuntuone.vm.hostname ="fubuntuone"
-		fubuntuone.vm.network :public_network
-		fubuntuone.vm.network "forwarded_port", guest: 8000, host: 9001,
+		fubuntuone.vm.network :public_network, ip: "192.168.1.15"
+		fubuntuone.vm.network "forwarded_port", guest: 9001, host: 9001,
+    			auto_correct: true
+		fubuntuone.vm.network "forwarded_port", guest: 8000, host: 9007,
     			auto_correct: true
   		fubuntuone.vm.network "forwarded_port", guest: 8080, host: 9002,
     			auto_correct: true  
@@ -21,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     			auto_correct: true
   		fubuntuone.vm.network "forwarded_port", guest: 4001, host: 9004,
     			auto_correct: true
-  		fubuntuone.vm.network "forwarded_port", guest: 5001, host: 9005,
+  		fubuntuone.vm.network "forwarded_port", guest: 5001, host: 5001,
     			auto_correct: true
   		fubuntuone.vm.network "forwarded_port", guest: 9006, host: 9006,
     			auto_correct: true
@@ -32,29 +34,96 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   		fubuntuone.vm.network "forwarded_port", guest: 59984, host: 59984,
     			auto_correct: true
 
-		fubuntuone.vm.provision :shell, :privileged => false, :path => "bootstrap_ubuntu.sh"
+		#fubuntuone.vm.provision :shell, :privileged => false, :path => "bootstrap_ubuntu.sh"
 		fubuntuone.vm.provider :virtualbox do |vb|
 			vb.gui = false # change to `true` if you get "Error: Connection timeout." while booting
-			vb.memory = 4096 # warning: this is higher than what our production server has
+			vb.memory = 2048 # warning: this is higher than what our production server has
 			vb.cpus = 2
 			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 			vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
 		end
 
 	end
-
-  	config.vm.define "fubuntutwo", autostart: false do |fubuntutwo|
+  	
+	config.vm.define "fubuntutwo", primary: true do |fubuntutwo|
 
 		fubuntutwo.vm.box = "ubuntu/xenial64"
   		fubuntutwo.vm.hostname ="fubuntutwo"
-  		fubuntutwo.vm.network "forwarded_port", guest: 8000, host: 9001,
+		fubuntutwo.vm.network :public_network, ip: "192.168.1.16"
+		fubuntuone.vm.network "forwarded_port", guest: 9001, host: 9010,
     			auto_correct: true
-  		fubuntutwo.vm.network "forwarded_port", guest: 8080, host: 9002,
+		fubuntuone.vm.network "forwarded_port", guest: 9001, host: 9001,
+    			auto_correct: true
+		fubuntutwo.vm.network "forwarded_port", guest: 8000, host: 9011,
+    			auto_correct: true
+  		fubuntutwo.vm.network "forwarded_port", guest: 8080, host: 9012,
     			auto_correct: true  
-  		fubuntutwo.vm.network "forwarded_port", guest: 4004, host: 9003,
+  		fubuntutwo.vm.network "forwarded_port", guest: 4004, host: 9013,
     			auto_correct: true
-		fubuntutwo.vm.provision :shell, :privileged => false, :path => "bootstrap_ubuntu.sh"
+  		fubuntutwo.vm.network "forwarded_port", guest: 4001, host: 9014,
+    			auto_correct: true
+  		fubuntutwo.vm.network "forwarded_port", guest: 5001, host: 9015,
+    			auto_correct: true
+  		fubuntutwo.vm.network "forwarded_port", guest: 9006, host: 9016,
+    			auto_correct: true
+  		
+		#BIchain DB ports 
+		fubuntutwo.vm.network "forwarded_port", guest: 58080, host: 48080,
+    			auto_correct: true
+  		fubuntutwo.vm.network "forwarded_port", guest: 59984, host: 49984,
+    			auto_correct: true
+
+		#fubuntuone.vm.provision :shell, :privileged => false, :path => "bootstrap_ubuntu.sh"
+		fubuntutwo.vm.provider :virtualbox do |vb|
+			vb.gui = false # change to `true` if you get "Error: Connection timeout." while booting
+			vb.memory = 2048 # warning: this is higher than what our production server has
+			vb.cpus = 2
+			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+			vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+		end
+
 	end
+	
+	config.vm.define "fubuntuthree", primary: true do |fubuntuthree|
+
+		fubuntuthree.vm.box = "ubuntu/xenial64"
+  		fubuntuthree.vm.hostname ="fubuntuthree"
+		fubuntuthree.vm.network :public_network , ip: "192.168.1.17"
+		fubuntuthree.vm.network "forwarded_port", guest: 8000, host: 9021,
+    			auto_correct: true
+  		fubuntuthree.vm.network "forwarded_port", guest: 8080, host: 9022,
+    			auto_correct: true  
+  		fubuntuthree.vm.network "forwarded_port", guest: 4004, host: 9023,
+    			auto_correct: true
+  		fubuntuthree.vm.network "forwarded_port", guest: 4001, host: 9024,
+    			auto_correct: true
+  		fubuntuthree.vm.network "forwarded_port", guest: 5001, host: 9025,
+    			auto_correct: true
+  		fubuntuthree.vm.network "forwarded_port", guest: 9006, host: 9026,
+    			auto_correct: true
+  		fubuntuthree.vm.network "forwarded_port", guest: 9001, host: 9027,
+    			auto_correct: true
+  		
+		#BIchain DB ports 
+		fubuntuthree.vm.network "forwarded_port", guest: 58080, host: 38080,
+    			auto_correct: true
+  		fubuntuthree.vm.network "forwarded_port", guest: 59984, host: 39984,
+    			auto_correct: true
+
+		#fubuntuone.vm.provision :shell, :privileged => false, :path => "bootstrap_ubuntu.sh"
+		fubuntuthree.vm.provider :virtualbox do |vb|
+			vb.gui = false # change to `true` if you get "Error: Connection timeout." while booting
+			vb.memory = 2048 # warning: this is higher than what our production server has
+			vb.cpus = 2
+			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+			vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+		end
+
+	end
+	
+	
+	
+
 
   	config.vm.define "fclientone", autostart: false do |fclientone|
 
