@@ -2,6 +2,7 @@
 #:include Application/userpage.kv
 #:include user_registration.kv
 #:include forgot_password.kv
+#:import hex kivy.utils.get_color_from_hex
 
 
 
@@ -38,16 +39,18 @@
                 
 
                 Label:
-                    text: "Username"
+                    text: "[b][color=#3d7f4c]Username[/b]"
+                    markup: True
                 TextInput:
                     id: username
-                    hint_text: "username"
+                    hint_text: "[b]username[/b]"
+                    markup: True
                     text:''
                     multiline: False
 
 
-                Label:
-                    text: "Password"
+                WrappedLabel:
+                    text: "[b][color=#3d7f4c]Password[/b]"
                 TextInput:
                     id: password
                     hint_text: "password"
@@ -59,15 +62,16 @@
                 orientation: "vertical"
                 padding: 10,10,10,10
                 spacing: 10
-                size_hint: 1, .5
+                size_hint: 1, .4
                 cols: 1
-                Button:
-                    text: "Login"
+                WrappedButton:
+                    text: "[b][color=#3d7f4c]Login[/b]"
+                    markup: True
                     on_press: root.do_login(username.text, password.text)
-                Button:
+                WrappedButton:
                     text: "Register"
                     on_press: root.do_registration()
-                Button:
+                WrappedButton:
                     text: "Forgot Password"
                     on_press: root.do_forgot_password()
                     

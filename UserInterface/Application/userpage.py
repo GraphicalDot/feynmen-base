@@ -7,6 +7,7 @@ from kivy.uix.listview import ListItemButton, ListView
 from kivy.properties import ObjectProperty, ListProperty
 from faker import Faker
 from kivy.adapters.dictadapter import DictAdapter
+from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelItem
 from kivy.uix.listview import ListItemButton, ListItemLabel, \
 CompositeListItem, ListView
 fake = Faker()
