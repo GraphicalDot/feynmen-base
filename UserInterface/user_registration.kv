@@ -4,147 +4,132 @@
 
 <UserRegistration>:
     BoxLayout:
-        padding: 5,5,5,5
-        spacing: [10, 10]
-        size_hint: 1, 1
         orientation: "vertical"
         
         BoxLayout:
-            orientation: "vertical"
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1,1
-                Label:
-                    size_hint: 1, 1
-                    text: "Username"
-                TextInput:
-                    id: username
-                    hint_text: "username"
-                    size_hint: 1, 1
-                    text:''
-                    multiline: False
+            size_hint_y: 0.2
+            padding: [10, 10, 10, 10]
+            orientation: "horizontal"
+            Label:
+                text: "Username"
+            TextInput:
+                id: username
+                hint_text: "username"
+                text:''
+                multiline: False
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
-                Label:
-                    size_hint: 1, 1
-                    text: "Password"
-                TextInput:
-                    id: password
-                    hint_text: "password"
-                    size_hint: 1, 1
-                    password: True
-                    text:''
-                    multiline: False
+        BoxLayout:
+            size_hint_y: 0.2
+            padding: [10, 10, 10, 10]
+            orientation: "horizontal"
+            Label:
+                text: "Password"
+            TextInput:
+                id: password
+                hint_text: "password"
+                password: True
+                text:''
+                multiline: False
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
-                Label:
-                    size_hint: 1, 1
-                    text: "Repeat Password"
-                TextInput:
-                    id: repeatpassword
-                    size_hint: 1, 1
-                    hint_text: "repeat password"
-                    password: True
-                    text:''
-                    multiline: False
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: 0.2
+            padding: [10, 10, 10, 10]
+            Label:
+                text: "Repeat Password"
+            TextInput:
+                id: repeatpassword
+                hint_text: "repeat password"
+                password: True
+                text:''
+                multiline: False
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
-                Label:
-                    size_hint: 1, 1
-                    text: "Email Id"
-                TextInput:
-                    id: emailid
-                    hint_text: "email id"
-                    size_hint: 1, 1
-                    text:''
-                    multiline: False
+        BoxLayout:
+            size_hint_y: 0.2
+            padding: [10, 10, 10, 10]
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
-                Label:
-                    size_hint: 1, 1
-                    text: "Phone number"
-                TextInput:
-                    id: phonenumber
-                    hint_text: "phone number"
-                    size_hint: 1, 1
-                    text:''
-                    multiline: False
+            orientation: "horizontal"
+            Label:
+                text: "Email Id"
+            TextInput:
+                id: emailid
+                hint_text: "email id"
+                text:''
+                multiline: False
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
-                Label:
-                    size_hint: 1, 1
-                    text: "Adhaar number"
-                TextInput:
-                    id: adhaarnumber
-                    hint_text: "adhaar number"
-                    size_hint: 1, 1
-                    text:''
-                    multiline: False
+        BoxLayout:
+            size_hint_y: 0.2
+            padding: [10, 10, 10, 10]
+
+            orientation: "horizontal"
+            Label:
+                text: "Phone number"
+            TextInput:
+                id: phonenumber
+                hint_text: "phone number"
+                text:''
+                multiline: False
+
+        BoxLayout:
+            size_hint_y: 0.2
+            padding: [10, 10, 10, 10]
+
+            orientation: "horizontal"
+            Label:
+                text: "Adhaar number"
+            TextInput:
+                id: adhaarnumber
+                hint_text: "adhaar number"
+                text:''
+                multiline: False
 
 
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
+        BoxLayout:
+            size_hint_y: 0.2
+            padding: [10, 10, 10, 10]
 
-              
-                Label:
-                    size_hint: 1, 1
-                    text: "SocialID front"
-                TextInput:
-                    id: socialidfront
-                    text: root.file
-                    size_hint: 1, 1
-                    multiline: False                    
-                Button:
-                    text: 'Load'
-                    size_hint: 1, 1
-                    on_press: root.open("socialidfront")
+            orientation: "horizontal"
+            Label:
+                text: "SocialID front"
+            TextInput:
+                id: socialidfront
+                text: root.file
+                multiline: False                    
+            Button:
+                text: 'Load'
+                on_press: root.open("socialidfront")
 
-                    
                 
-                    
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
-                Label:
-                    size_hint: 1, 1
-                    text: "SocialID back"
-                TextInput:
-                    id:socialidback
-                    text: root.file
-                    size_hint: 1, 1
-                    multiline: False
-                Button:
-                    text: 'Load'
-                    size_hint: 1, 1
-                    on_press: root.open("socialidback")
+            
+                
+        BoxLayout:
+            padding: [10, 10, 10, 10]
+            orientation: "horizontal"
+            size_hint_y: 0.2
+            Label:
+                text: "SocialID back"
+            TextInput:
+                id:socialidback
+                text: root.file
+                multiline: False
+            Button:
+                text: 'Load'
+                on_press: root.open("socialidback")
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint: 1, 1
-                Label:
-                    size_hint: 1, 1
-                    text: "self image"
-                TextInput:
-                    id:selfimage
-                    text: root.file
-                    size_hint: 1, 1
-                    multiline: False
-                Button:
-                    text: 'Load'
-                    size_hint: 1, 1
-                    on_press: root.open("selfimage")
+        BoxLayout:
+            padding: [10, 10, 10, 10]
+            size_hint_y: 0.2
+            orientation: "horizontal"
+            Label:
+                text: "self image"
+            TextInput:
+                id:selfimage
+                text: root.file
+                multiline: False
+            Button:
+                text: 'Load'
+                on_press: root.open("selfimage")
 
 
 
@@ -152,12 +137,11 @@
             orientation: "horizontal"
             padding: 10,10,10,10
             spacing: 10
+            size_hint_y: 0.2
         
             Button:
-                size_hint: 1,0.25
                 text: "Submit"
             Button:
-                size_hint: 1,0.25
                 text: "Cancel"
                 on_press: root.on_cancel()
 

@@ -2,12 +2,12 @@
 #:include Application/userpage.kv
 #:include user_registration.kv
 #:include forgot_password.kv
-#:include  Application/kivy_table/table.kv
 
 
 
 <LoginPage>:
-    BoxLayout:
+    GridLayout:
+        cols: 2
         spacing: 0
         orientation: "horizontal"
         BoxLayout:
@@ -21,57 +21,53 @@
                 height: self.height
                 allow_stretch:False
                 keep_ratio:True
-        BoxLayout:
+        GridLayout:
+            cols: 1
             padding: 0,0,0,0
-            spacing: 0
-            size_hint: 1,1
+            spacing: 10, 10
+            size_hint: 1, .2
             orientation: "vertical"
             
-            BoxLayout:
-                spacing: [0, 0]
+            GridLayout:
+                cols: 2
                 orientation: "vertical"
-                BoxLayout:
-                    orientation: "horizontal"
-                    size_hint: 1,0.2
-                    Label:
-                        size_hint: 1,0.2
-                        text: "Username"
-                    TextInput:
-                        id: username
-                        hint_text: "username"
-                        size_hint: 1,0.2
-                        text:''
-                        multiline: False
+                row_force_default: True
+                row_default_height: 50
+                spacing: [10, 10]
+                padding: [10, 100, 10, 10]
+                
 
-                BoxLayout:
-                    orientation: "horizontal"
-                    size_hint: 1, 0.2
-                    Label:
-                        size_hint: 1,0.2
-                        text: "Password"
-                    TextInput:
-                        id: password
-                        hint_text: "password"
-                        size_hint: 1,0.2
-                        password: True
-                        text:''
-                        multiline: False
+                Label:
+                    text: "Username"
+                TextInput:
+                    id: username
+                    hint_text: "username"
+                    text:''
+                    multiline: False
 
-            BoxLayout:
-                orientation: "horizontal"
+
+                Label:
+                    text: "Password"
+                TextInput:
+                    id: password
+                    hint_text: "password"
+                    password: True
+                    text:''
+                    multiline: False
+
+            GridLayout:
+                orientation: "vertical"
                 padding: 10,10,10,10
                 spacing: 10
-            
+                size_hint: 1, .5
+                cols: 1
                 Button:
-                    size_hint: 1,0.1
                     text: "Login"
                     on_press: root.do_login(username.text, password.text)
                 Button:
-                    size_hint: 1,0.1
                     text: "Register"
                     on_press: root.do_registration()
                 Button:
-                    size_hint: 1,0.1
                     text: "Forgot Password"
                     on_press: root.do_forgot_password()
                     

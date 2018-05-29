@@ -1,3 +1,9 @@
+#:import ListItemButton kivy.uix.listview.ListItemButton
+#:import ListAdapter kivy.adapters.listadapter.ListAdapter
+#:import DictAdapter kivy.adapters.dictadapter
+#:import CompositeListItem kivy.uix.listview
+#:import SelectableView kivy.uix.listview
+
 
 <UserPage>:
     BoxLayout:
@@ -5,8 +11,14 @@
         spacing: [10, 10]
         size_hint: 1, 1
         orientation: "vertical"
-        ListView:
-            item_strings: [str(index) for index in range(100)]
+
+        BoxLayout:
+            id: l_id
+            orientation: 'vertical'
+            ListView:
+                id: l_id
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size_hint: 0.5, 0.7
 
         BoxLayout:
             orientation: "horizontal"
