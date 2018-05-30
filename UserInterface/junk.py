@@ -140,10 +140,10 @@ if __name__ == '__main__':
     pg = PageLayout()
     staticpage = Factory.Page(name='static')
     staticpage.add_widget(DataTable(name = 'static', data=data, header_column = 'Col1', 
-                                    header_row = ['Col'+str(x+1) for x in xrange(5)]))
+                                    header_row = ['Col'+str(x+1) for x in range(5)]))
     editpage = Factory.Page(name='edit')
     editpage.add_widget(DataTable(name = 'edit', data=data, header_column = 'Col5', 
-                                  header_row = ['Col'+str(5-x) for x in xrange(5)],
+                                  header_row = ['Col'+str(5-x) for x in range(5)],
                                   editable = True))
     pg.add_widget(staticpage)
     pg.add_widget(editpage)

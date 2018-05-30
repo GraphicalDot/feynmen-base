@@ -6,6 +6,7 @@
 #:import TabbedPanel kivy.uix.tabbedpanel 
 #:import TabbedPanelItem kivy.uix.tabbedpanel 
 #:import hex kivy.utils.get_color_from_hex
+#Reference userpage.py
 
 
 
@@ -56,18 +57,81 @@
         TabbedPanelItem:
             background_color: hex("#356141")
             text: 'Jobs'
-            RstDocument:
-                text:
-                    '\\n'.join(("Hello world", "-----------",
-                    "You are in the third tab."))
+            size_hint: 1, 1
+            ScrollView:
+                # setting the width of the scrollbar to 50pixels
+                bar_width: 50
+                # setting the color of the active bar using rgba
+                bar_color: 5, 10, 15, .8
+                # setting the color of the inactive bar using rgba
+                bar_inactive_color: 5, 20, 10, .5
+                # setting the content only to scroll via bar, not content
+                scroll_type: ['bars']
+                bar_width: 4
+
+                FloatLayout:
+                    id: tab_1
+                    size_hint_y: None
+                    minimum_height: self.height
+
 
         TabbedPanelItem:
             background_color: hex("#356141")
             text: 'Smart contracts'
-            RstDocument:
-                text:
-                    '\\n'.join(("Hello world", "-----------",
-                    "You are in the third tab."))
+            ScrollView:
+                GridLayout:
+                    cols: 1
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: 10
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Button:
+                                text: "1"
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Button:
+                                text: "2"
+                            Button:
+                                text: "3"
+                            Button:
+                                text: "4"
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Button:
+                                text: "5"
+                            Button:
+                                text: "6"
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Button:
+                                text: "7"
+                            Button:
+                                text: "8"
+                            Button:
+                                text: "9"
+                            Button:
+                                text: "10"
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Button:
+                                text: "7"
+                            Button:
+                                text: "8"
+                            Button:
+                                text: "9"
+                            Button:
+                                text: "10"
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            Button:
+                                text: "7"
+                            Button:
+                                text: "8"
+                            Button:
+                                text: "9"
+                            Button:
+                                text: "10"
 
 
 

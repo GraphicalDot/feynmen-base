@@ -1,0 +1,30 @@
+#:kivy 1.9.0
+
+<PlayerRecord>:
+    size_hint_y: None
+    height: '30dp'
+    width: '100dp'
+
+    canvas.before:
+        Color:
+            rgb: 0.2, 0.2, 0.2
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+<TableHeader>
+    size_hint_y: None
+    height: '30dp'
+    width: '100dp'
+
+    canvas.before:
+        Color:
+            rgb: 0.5, 0.5, 0.5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+MyGrid:
+        id: mygrid
+        cols: 4

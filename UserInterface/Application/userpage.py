@@ -6,13 +6,58 @@ from kivy.adapters.listadapter import ListAdapter
 from kivy.uix.listview import ListItemButton, ListView
 from kivy.properties import ObjectProperty, ListProperty
 from faker import Faker
-from kivy.adapters.dictadapter import DictAdapter
 from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelItem
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.listview import ListItemButton, ListItemLabel, \
 CompositeListItem, ListView
+from kivy.properties import ObjectProperty
+from Application.table import MyGrid
 fake = Faker()
 
+data =    [
+            {'name': 'name', 'score': 'score', 'car': 'car'},
+            {'name': 'przyczajony', 'score': '1337', 'car': 'Fiat 126p'},
+            {'name': 'Krusader Jake', 'score': '777', 'car': 'Ford'},
+            {'name': 'dummy', 'score': '10', 'car': 'none'},
+            {'name': 'dummy', 'score': '102', 'car': 'none'},
+            {'name': 'dummy', 'score': '60', 'car': 'none'},
+            {'name': 'dummy', 'score': '990', 'car': 'none'},
+            {'name': 'dummy', 'score': '550', 'car': 'none'},
+            {'name': 'dummy', 'score': '310', 'car': 'none'},
+            {'name': 'dummy', 'score': '320', 'car': 'none'},
+            {'name': 'dummy', 'score': '880', 'car': 'none'},
+             {'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
 
+
+        ]
+
+f = MyGrid(data, cols=4)
+
+
+
+class IPFSListButton(ListItemButton):
+    def __init__(self, *args, **kwargs):
+        super(IPFSListButton, self).__init__(*args, **kwargs)
+        self.fbind('on_is_selected', self.print_info)
+        self.fbind('on_press', self.print_info_p)
+
+    def print_info(self,*args):
+        print ("on_is_selected: item {}, is_selected: {}, index: {}".format(self, self.is_selected, self.index))
+    def print_info_p(self,*args):
+        print ("on_press: item {}, is_selected: {}, index: {}".format(self, self.is_selected, self.index))
+
+    
 
 
 class DataItem(object):
@@ -23,27 +68,25 @@ class DataItem(object):
 
 
 class UserPage(Screen):
-    data_items = ListProperty([])
-    items = ListProperty([])
+    ##IPFSListButton now you can access it in .kv file by referring as root.IPFSListButton
+    IPFSListButton = IPFSListButton
+    data_items = ObjectProperty([])
+    sorted_keys = ListProperty([])
     app = ObjectProperty(None)
     transport = ObjectProperty(None)
+    #tab_1=ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(UserPage, self).__init__(**kwargs)
-
-        self.data_items = [DataItem(name='cat', created_on=fake.date()),
-              DataItem(name='dog', created_on=fake.date()),
-              DataItem(name='frog', created_on=fake.date())]
-
+        print (f)
+        print (dir(f))
+        print (self.ids)
+        #self.tab_1.bind(minimum_height=self.layout_content.setter('height'))
+        self.ids.tab_1.add_widget(f)
+        
         #self.data_items = [{'name': fake.name(),  'is_selected': False} for i in range(10)]
 
 
-    def _args_converter(self, row_index, obj):
-        __dict = {'name': obj.name, 
-                'size_hint_y': None, 
-                'height': 25, 
-                }
-        return __dict
 
     def disconnect(self):
         self.manager.transition = SlideTransition(direction="right")
@@ -64,17 +107,9 @@ class UserPage(Screen):
         self.manager.get_screen('Login').resetForm()
         return  
 
-    def selection_changed(self, *args):
-        print ('You can even bind a callback that does something when your selection changes, if you want.')
 
-    def  create_asset(self):
-        print ("create asset has been clicked")
+    
 
-
-    def store_data(self):
-        print ("Store data has been clicked")
-
-    def transfer_asset(self):
-        print ("Transfer asset has been clicked")
-
+if __name__== "__main__":
+    pass
     
