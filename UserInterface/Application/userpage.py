@@ -78,9 +78,6 @@ class UserPage(Screen):
 
     def __init__(self, **kwargs):
         super(UserPage, self).__init__(**kwargs)
-        print (f)
-        print (dir(f))
-        print (self.ids)
         #self.tab_1.bind(minimum_height=self.layout_content.setter('height'))
         self.ids.tab_1.add_widget(f)
         

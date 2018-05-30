@@ -37,6 +37,7 @@ Builder.load_string("""
 
 
 <MTable>:
+    
     cols: 4
     size_hint_y: None
     height: self.minimum_height

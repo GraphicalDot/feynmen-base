@@ -57,19 +57,40 @@
         TabbedPanelItem:
             background_color: hex("#356141")
             text: 'Jobs'
-            size_hint: 1, 1
-            ScrollView:
-                # setting the width of the scrollbar to 50pixels
-                bar_width: 50
-                # setting the color of the active bar using rgba
-                bar_color: 5, 10, 15, .8
-                # setting the color of the inactive bar using rgba
-                bar_inactive_color: 5, 20, 10, .5
-                # setting the content only to scroll via bar, not content
-                scroll_type: ['bars']
-                bar_width: 4
-                id: tab_1
-                size_hint_y: None
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 10, 10
+                padding: [5, 5, 5, 5]
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Button:
+                        text: "1"
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Button:
+                        text: "2"
+                    Button:
+                        text: "3"
+                    Button:
+                        text: "4"
+                BoxLayout:
+                    canvas:
+                        Color:
+                            rgb: 1, 0, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    ScrollView:
+                        # setting the width of the scrollbar to 50pixels
+                        bar_width: 50
+                        # setting the color of the active bar using rgba
+                        bar_color: 5, 10, 15, .8
+                        # setting the color of the inactive bar using rgba
+                        bar_inactive_color: 5, 20, 10, .5
+                        # setting the content only to scroll via bar, not content
+                        scroll_type: ['bars']
+                        bar_width: 4
+                        id: tab_1
 
 
         TabbedPanelItem:
