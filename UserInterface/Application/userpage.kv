@@ -91,70 +91,34 @@
 
         TabbedPanelItem:
             background_color: hex("#356141")
-            text: 'Transfer Asset'
+            text: 'Add & Transfer Assets'
             RstDocument:
                 text:
-                    '\\n'.join(("Hello world", "-----------",
-                    "You are in the third tab."))
+                    '\n'.join(("Transfer asset Tab", "-----------",
+                    "Here the user will create the asset from the file stored on IPFS .", 
+                    "and then transfer these assets to the Users present on BIGchainDB"))
 
+        TabbedPanelItem:
+            background_color: hex("#356141")
+            text: 'Resources'
+            RstDocument:
+                text:
+                    '\n'.join(("Resources Tab", "-----------",
+                    "Here the user can dynamically change the resources allocated to the virtual machine"))
 
         TabbedPanelItem:
             background_color: hex("#356141")
             text: 'Smart contracts'
-            ScrollView:
-                GridLayout:
-                    cols: 1
-                    BoxLayout:
-                        orientation: 'vertical'
-                        padding: 10
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            Button:
-                                text: "1"
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            Button:
-                                text: "2"
-                            Button:
-                                text: "3"
-                            Button:
-                                text: "4"
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            Button:
-                                text: "5"
-                            Button:
-                                text: "6"
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            Button:
-                                text: "7"
-                            Button:
-                                text: "8"
-                            Button:
-                                text: "9"
-                            Button:
-                                text: "10"
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            Button:
-                                text: "7"
-                            Button:
-                                text: "8"
-                            Button:
-                                text: "9"
-                            Button:
-                                text: "10"
-                        BoxLayout:
-                            orientation: 'horizontal'
-                            Button:
-                                text: "7"
-                            Button:
-                                text: "8"
-                            Button:
-                                text: "9"
-                            Button:
-                                text: "10"
+            RstDocument:
+                text:
+                    '\n'.join(("Smart Contracts Tab", "-----------",
+                    "\n", "Here the user can float smart contracts on Ethereum private blockchain to train their machine learning models", 
+                    "\n", "The user can set preferences for the node show should be selected to participate based on their past history", 
+                    "\n", "After successful execution of the contract, A user can also store this machine learning model on IPFS and ", 
+                    "\n", "Float a smart contract for other users to use this Machine learning model in liue of tokens.  ", 
+                    
+                    ))
+
 
 
 
