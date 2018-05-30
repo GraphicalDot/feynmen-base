@@ -11,7 +11,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.listview import ListItemButton, ListItemLabel, \
 CompositeListItem, ListView
 from kivy.properties import ObjectProperty
-from Application.table import MyGrid
+from Application.table import MTable
 fake = Faker()
 
 data =    [
@@ -42,7 +42,7 @@ data =    [
 
         ]
 
-f = MyGrid(data, cols=4)
+f = MTable(data, cols=4)
 
 
 

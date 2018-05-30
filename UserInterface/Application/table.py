@@ -10,6 +10,40 @@ from kivy.properties import StringProperty, NumericProperty
 from functools import partial
 
 
+Builder.load_string("""
+<PlayerRecord>:
+    size_hint_y: None
+    height: '30dp'
+    width: '100dp'
+
+    canvas.before:
+        Color:
+            rgb: 0.2, 0.2, 0.2
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<TableHeader>
+    size_hint_y: None
+    height: '30dp'
+    width: '100dp'
+
+    canvas.before:
+        Color:
+            rgb: 0.5, 0.5, 0.5
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+<MTable>:
+    cols: 4
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: '1dp'
+""")
+
+
 class TableHeader(Label):
     pass
 
@@ -18,10 +52,11 @@ class PlayerRecord(Label):
     pass
 
 
-class MyGrid(GridLayout):
+class MTable(GridLayout):
 
     def __init__(self, data, **kwargs):
-        super(MyGrid, self).__init__(**kwargs)
+        super(MTable, self).__init__(**kwargs)
+
         self.data = data
         self.display_scores()
 
@@ -31,13 +66,7 @@ class MyGrid(GridLayout):
             {'name': 'przyczajony', 'score': '1337', 'car': 'Fiat 126p'},
             {'name': 'Krusader Jake', 'score': '777', 'car': 'Ford'},
             {'name': 'dummy', 'score': '10', 'car': 'none'},
-            {'name': 'dummy', 'score': '102', 'car': 'none'},
-            {'name': 'dummy', 'score': '60', 'car': 'none'},
-            {'name': 'dummy', 'score': '990', 'car': 'none'},
-            {'name': 'dummy', 'score': '550', 'car': 'none'},
-            {'name': 'dummy', 'score': '310', 'car': 'none'},
-            {'name': 'dummy', 'score': '320', 'car': 'none'},
-            {'name': 'dummy', 'score': '880', 'car': 'none'}
+            {'name': 'Last', 'score': '880', 'car': 'none'}
         ]
 
     def display_scores(self):
@@ -68,8 +97,16 @@ class MyGrid(GridLayout):
     def on_enter(self, *args):
         print (args[0])
 
-class Table(App):
+class MyPaintApp(App):
+
+    data =    [
+            {'name': 'name', 'score': 'score', 'car': 'car'},
+            {'name': 'przyczajony', 'score': '1337', 'car': 'Fiat 126p'},
+            {'name': 'Krusader Jake', 'score': '777', 'car': 'Ford'},
+    ]
+    def build(self):
+        return MTable(self.data, cols=4)
+
+if __name__ == '__main__':
     pass
-
-
-#Test().run()
+    #MyPaintApp().run()
