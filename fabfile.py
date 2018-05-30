@@ -39,12 +39,13 @@ def ipfs_cluster():
     run("rm ipfs-cluster-service_v0.4.0-rc1_linux-amd64.tar.gz")
     run("sudo mv ipfs-cluster-service/ipfs-cluster-service /usr/local/bin")
     run("rm -rf ipfs-cluster-service")
+    """
     run("wget https://dist.ipfs.io/ipfs-cluster-ctl/v0.3.5/ipfs-cluster-ctl_v0.3.5_linux-amd64.tar.gz")
     run("tar xvfz ipfs-cluster-ctl_v0.3.5_linux-amd64.tar.gz")
     run("rm ipfs-cluster-ctl_v0.3.5_linux-amd64.tar.gz")
     run("sudo mv ipfs-cluster-ctl/ipfs-cluster-ctl /usr/local/bin")
     run("rm -rf ipfs-cluster-ctl")
-
+    """
 
 
 
