@@ -12,68 +12,28 @@ from kivy.uix.listview import ListItemButton, ListItemLabel, \
 CompositeListItem, ListView
 from kivy.properties import ObjectProperty
 from Application.table import MTable
+from os.path import sep, expanduser, isdir, dirname
+from kivy.garden.filebrowser import FileBrowser
+from kivy.utils import platform
+from kivy.uix.popup import Popup
 fake = Faker()
 
-data =    [
-            {'name': 'name', 'score': 'score', 'car': 'car'},
-            {'name': 'przyczajony', 'score': '1337', 'car': 'Fiat 126p'},
-            {'name': 'Krusader Jake', 'score': '777', 'car': 'Ford'},
-            {'name': 'dummy', 'score': '10', 'car': 'none'},
-            {'name': 'dummy', 'score': '102', 'car': 'none'},
-            {'name': 'dummy', 'score': '60', 'car': 'none'},
-            {'name': 'dummy', 'score': '990', 'car': 'none'},
-            {'name': 'dummy', 'score': '550', 'car': 'none'},
-            {'name': 'dummy', 'score': '310', 'car': 'none'},
-            {'name': 'dummy', 'score': '320', 'car': 'none'},
-            {'name': 'dummy', 'score': '880', 'car': 'none'},
-             {'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
-{'name': 'dummy', 'score': '880', 'car': 'none'},{'name': 'dummy', 'score': '880', 'car': 'none'},
+data =  [{"file_name": fake.file_name(), "stored_on": fake.date(), "location": fake.sha1() } for i in range(50)]
 
-
-        ]
 
 f = MTable(data, cols=4)
 
 
 
-class IPFSListButton(ListItemButton):
-    def __init__(self, *args, **kwargs):
-        super(IPFSListButton, self).__init__(*args, **kwargs)
-        self.fbind('on_is_selected', self.print_info)
-        self.fbind('on_press', self.print_info_p)
-
-    def print_info(self,*args):
-        print ("on_is_selected: item {}, is_selected: {}, index: {}".format(self, self.is_selected, self.index))
-    def print_info_p(self,*args):
-        print ("on_press: item {}, is_selected: {}, index: {}".format(self, self.is_selected, self.index))
-
-    
-
-
-class DataItem(object):
-    def __init__(self, name='', created_on="",  is_selected=False):
-        self.name = name
-        self.created_on = created_on
-        self.is_selected = is_selected
 
 
 class UserPage(Screen):
     ##IPFSListButton now you can access it in .kv file by referring as root.IPFSListButton
-    IPFSListButton = IPFSListButton
     data_items = ObjectProperty([])
-    sorted_keys = ListProperty([])
-    app = ObjectProperty(None)
-    transport = ObjectProperty(None)
+    loadfile = ObjectProperty(None)
+    savefile = ObjectProperty(None)
+    text_input = ObjectProperty(None)
+    file = 'enter zip path or select it'
     #tab_1=ObjectProperty(None)
 
     def __init__(self, **kwargs):
@@ -103,6 +63,37 @@ class UserPage(Screen):
         self.manager.current = 'Login'
         self.manager.get_screen('Login').resetForm()
         return  
+
+    def open(self, textfield_id):
+        self.popup = Popup(title='Test popup',
+                  content=self.explorer(),
+                  size_hint=(None, None), size=(600, 600))
+        self.popup.open()
+        self.textid = textfield_id
+    
+    def explorer(self):
+        if platform == 'win':
+            user_path = dirname(expanduser('~')) + sep + 'Documents'
+        else:
+            user_path = expanduser('~') + sep + 'Documents'
+        browser = FileBrowser(select_string='Select',
+                          favorites=[(user_path, 'Documents')])
+        browser.bind(
+                on_success=self._fbrowser_success,
+                on_canceled=self._fbrowser_canceled)
+        return browser
+
+    def _fbrowser_canceled(self, instance):
+        print ('cancelled, Close self.')
+        self.popup.dismiss()
+
+    def _fbrowser_success(self, instance):
+        print(instance.selection[0])
+        self.file = instance.selection[0]
+
+        f = self.ids[self.textid]
+        f.text = self.file
+        self.popup.dismiss()
 
 
     

@@ -37,46 +37,35 @@
             Label:
                 text: 'First tab content area'
 
-        TabbedPanelItem:
-            background_color: hex("#356141")
-            text: 'Store content'
-            BoxLayout:
-                Label:
-                    text: 'Second tab content area'
-                Button:
-                    text: 'Button that does nothing'
 
         TabbedPanelItem:
             background_color: hex("#356141")
-            text: 'Transfer Asset'
-            RstDocument:
-                text:
-                    '\\n'.join(("Hello world", "-----------",
-                    "You are in the third tab."))
-
-        TabbedPanelItem:
-            background_color: hex("#356141")
-            text: 'Jobs'
+            text: 'Store Content'
             BoxLayout:
                 orientation: "vertical"
                 spacing: 10, 10
                 padding: [5, 5, 5, 5]
                 BoxLayout:
-                    orientation: 'horizontal'
+                    size_hint_y: 0.2
+                    padding: [10, 10, 10, 10]
+
+                    orientation: "horizontal"
+                    Label:
+                        text: "File to be stored"
+                    Label:
+                        id: ipfs_file_location
+                        text: root.file
+                        text_size: self.width, None
+                        height: self.texture_size[1]
                     Button:
-                        text: "1"
-                BoxLayout:
-                    orientation: 'horizontal'
-                    Button:
-                        text: "2"
-                    Button:
-                        text: "3"
-                    Button:
-                        text: "4"
+                        text: 'Load'
+                        size_hint: 1, 0.5
+                        on_press: root.open("ipfs_file_location")
+
                 BoxLayout:
                     canvas:
                         Color:
-                            rgb: 1, 0, 1
+                            rgb: 0, 0, 0
                         Rectangle:
                             pos: self.pos
                             size: self.size
@@ -91,6 +80,22 @@
                         scroll_type: ['bars']
                         bar_width: 4
                         id: tab_1
+        TabbedPanelItem:
+            background_color: hex("#356141")
+            text: 'Jobs'
+            BoxLayout:
+                Label:
+                    text: 'Second tab content area'
+                Button:
+                    text: 'Button that does nothing'
+
+        TabbedPanelItem:
+            background_color: hex("#356141")
+            text: 'Transfer Asset'
+            RstDocument:
+                text:
+                    '\\n'.join(("Hello world", "-----------",
+                    "You are in the third tab."))
 
 
         TabbedPanelItem:

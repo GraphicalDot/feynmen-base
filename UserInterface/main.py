@@ -24,7 +24,7 @@ from kivy.config import Config
 #from kivy.core.window import Window
 #Window.size = (600, 500)
 
-Config.set('graphics', 'width', '800')
+Config.set('graphics', 'width', '1000')
 Config.set('graphics', 'height', '600')
 Config.write()
 import os
@@ -32,7 +32,9 @@ from alert import Alert
 
 store = JsonStore('feynmen.json')
 
+from kivy.core.window import Window
 
+Window.borderless = True
 
 
 

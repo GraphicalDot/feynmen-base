@@ -13,8 +13,8 @@ from functools import partial
 Builder.load_string("""
 <PlayerRecord>:
     size_hint_y: None
-    height: '30dp'
-    width: '100dp'
+    text_size: self.width, None
+    height: self.texture_size[1]
 
     canvas.before:
         Color:
@@ -74,23 +74,24 @@ class MTable(GridLayout):
         self.clear_widgets()
         for i in range(len(self.data)):
             if i < 1:
-                row = self.create_header(i)
+                row = self.create_header()
             else:
                 row = self.create_player_info(i)
             for item in row:
                 self.add_widget(item)
 
-    def create_header(self, i):
-        first_column = TableHeader(text=self.data[i]['name'])
-        second_column = TableHeader(text=self.data[i]['score'])
-        third_column = TableHeader(text=self.data[i]['car'])
+    def create_header(self):
+        keys = list(self.data[0].keys())
+        first_column = TableHeader(text=keys[0])
+        second_column = TableHeader(text=keys[1])
+        third_column = TableHeader(text=keys[2])
         fourth_column = TableHeader(text="action")
         return [first_column, second_column, third_column, fourth_column]
 
     def create_player_info(self, i):
-        first_column = PlayerRecord(text=self.data[i]['name'])
-        second_column = PlayerRecord(text=self.data[i]['score'])
-        third_column = PlayerRecord(text=self.data[i]['car'])
+        first_column = PlayerRecord(text=self.data[i]['file_name'])
+        second_column = PlayerRecord(text=self.data[i]['stored_on'])
+        third_column = PlayerRecord(text=self.data[i]['location'])
         fourth_column = Button(text="edit")
         fourth_column.bind(on_press=partial(self.on_enter, self.data[i]))
         return [first_column, second_column, third_column, fourth_column]
