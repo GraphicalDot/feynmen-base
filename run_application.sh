@@ -2,7 +2,8 @@
 #!/bin/bash 
 
 #https://stackoverflow.com/questions/20845056/how-can-i-expose-more-than-1-port-with-docker
-sudo docker build -t registry.gitlab.com/mesha/feynmen/feynmen_dnode:protoype . 
+#sudo docker build -t registry.gitlab.com/mesha/feynmen/feynmen_dnode:protoype -f DockerFiles/Dockerfile . 
+sudo docker build -t feynmen_dnode:v1.0 -f DockerFiles/Dockerfile . 
 
 
 

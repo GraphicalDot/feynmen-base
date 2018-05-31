@@ -59,10 +59,10 @@ def install_packages():
     run("sudo apt-get -y update")
     run("sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common\
             libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libssl-dev libffi-dev\
-            g++ python3-dev wget curl git python-pip python3-setuptools sudo apt-get install python3 python-dev python3-dev build-essential\
+            g++ python3-dev wget curl git python-pip python3-setuptools python3 python-dev python3-dev build-essential\
             libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev")
 
-    run("ffmpeg \
+    run("sudo apt-get install ffmpeg \
         libsdl2-dev \
         libsdl2-image-dev \
         libsdl2-mixer-dev \
