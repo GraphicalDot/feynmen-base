@@ -4,23 +4,29 @@ FROM ubuntu:16.04
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y software-properties-common 
 RUN add-apt-repository ppa:kivy-team/kivy
-RUN apt-get install -y  curl \
+RUN apt-get update && apt-get install -y  curl \
     python-pip dialog apt-utils \
     build-essential \
     git \
     python \
     python-dev \
     zlib1g-dev python3 python3-pip python3-setuptools \
-	python-kivy python3-kivy python-kivy-examples 
+    python3-kivy python-kivy-examples  python3-kivy-common python3-kivy-bin python3-opengl  libmtdev1   ffmpeg \
+    libsdl2-dev \
+    libsdl2-image-dev \
+    libsdl2-mixer-dev \
+    libsdl2-ttf-dev \
+    libportmidi-dev \
+    libswscale-dev \
+    libavformat-dev \
+    libavcodec-dev \
+    zlib1g-dev python3-dev libsdl2-net-dev  libsdl2-gfx-dev
 
-    libgstreamer1.0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good\
 
-
-RUN pip3 install Cython==0.25.2
-RUN pip3 install kivy-garden
+RUN pip3 install Cython==0.25.2 kivy-garden faker
 RUN garden install filebrowser
 ADD UserInterface/ /feynmen-base
-WORKDIR /feynmen-base
+
 
 
 
@@ -45,7 +51,7 @@ EXPOSE 4001 4002/udp 5001 8080 8081 9001
 
 
 ENV IPFS_PATH /data/ipfs
-RUN mkdir -p $IPFS_PATH && mkdir /UserInterface\
+RUN mkdir -p $IPFS_PATH /root/.config/main \
   && useradd -s /usr/sbin/nologin -d $IPFS_PATH -u 1000 -G users ipfs \
   && chown ipfs:users $IPFS_PATH
 
@@ -55,7 +61,6 @@ VOLUME $IPFS_PATH
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #ENTRYPOINT ["/usr/local/bin/ipfs"]
 
-ADD UserInterface/ /feynmen-base
 ##docker build --build-arg SSH_KEY_FILE =~/.ssh/id_rsa -f Dockerfile .
 #ipfs init && ipfs daemon &&\
 #	ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/9001 && \
@@ -66,4 +71,7 @@ ADD UserInterface/ /feynmen-base
 #RUN - Install Python , your container now has python burnt into its image 
 #CMD - python hello.py , run your favourite script, Only One CMD command execution will be respected.
 
+WORKDIR /feynmen-base
+
+#ENTRYPOINT ["python3", "main.py]
 
