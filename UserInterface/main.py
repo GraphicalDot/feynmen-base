@@ -46,8 +46,9 @@ class LoginPage(Screen):
         print (app.get_application_config())
 
         app.username = loginText
+        print ("This is the password text %s"%passwordText)
         app.password = hashlib.sha256(passwordText.encode("utf-8")).hexdigest()
-        
+        print (app.password)
 
         if app.username == "" or app.password == "":
             Alert(title='Feynmen error message', text='username and password cannot be left blank')
@@ -63,6 +64,7 @@ class LoginPage(Screen):
             #TODO: Make an api request here
             username = "admin"
             password = hashlib.sha256("1234".encode("utf-8")).hexdigest()
+            print ("This is the password we are storing %s"%password)
             store.put("credentials", username=username, password=password)
 
 

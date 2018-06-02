@@ -34,8 +34,20 @@
         TabbedPanelItem:
             background_color: hex("#356141")
             text: 'Key/Pairs'
-            Label:
-                text: 'First tab content area'
+            BoxLayout:
+                size_hint_y: 0.2
+                padding: [10, 10, 10, 10]
+
+                orientation: "horizontal"
+                Button:
+                    text: 'Generate IPFS address'
+                    size_hint: 1, 0.5
+                    on_press: root.generate_ipfs_address()
+                Label:
+                    id: ipfs_address
+                    text: root.ipfs_address
+                    text_size: self.width, None
+                    height: self.texture_size[1]
 
 
         TabbedPanelItem:

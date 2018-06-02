@@ -4,7 +4,7 @@ from kivy.uix.screenmanager import Screen, SlideTransition
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.adapters.listadapter import ListAdapter
 from kivy.uix.listview import ListItemButton, ListView
-from kivy.properties import ObjectProperty, ListProperty
+from kivy.properties import ObjectProperty, ListProperty, StringProperty
 from faker import Faker
 from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelItem
 from kivy.uix.scrollview import ScrollView
@@ -16,7 +16,10 @@ from os.path import sep, expanduser, isdir, dirname
 from kivy.garden.filebrowser import FileBrowser
 from kivy.utils import platform
 from kivy.uix.popup import Popup
+import subprocess
+
 fake = Faker()
+
 
 data =  [{"file_name": fake.file_name(), "stored_on": fake.date(), "location": fake.sha1() } for i in range(50)]
 
@@ -33,6 +36,7 @@ class UserPage(Screen):
     loadfile = ObjectProperty(None)
     savefile = ObjectProperty(None)
     text_input = ObjectProperty(None)
+    ipfs_address = StringProperty("")
     file = 'enter zip path or select it'
     #tab_1=ObjectProperty(None)
 
@@ -43,7 +47,24 @@ class UserPage(Screen):
         
         #self.data_items = [{'name': fake.name(),  'is_selected': False} for i in range(10)]
 
+    def generate_ipfs_address(self):
+        """
+        This initializes IPFS and get the public and private key
+        """
+        subprocess.Popen(['ipfs', 'init'], stderr=subprocess.PIPE)
+        subprocess.Popen(['ipfs', 'daemon&'], stderr=subprocess.PIPE)
+        subprocess.Popen(['ipfs', 'config', 'Addresses.Gateway', '/ip4/0.0.0.0/tcp/9001'])
+        subprocess.Popen(['ipfs', 'config', 'Addresses.API', '/ip4/0.0.0.0/tcp/5001'])
+        subprocess.Popen(['ipfs', 'config','--json', 'Experimental.FilestoreEnabled', 'true'])
+        __id = json.loads(subprocess.check_output(['ipfs', 'id'], stderr=subprocess.PIPE).decode())
+        
+        self.ipfs_address = __id["ID"]
 
+        ##In [45]: __id = json.loads(subprocess.check_output(['cat', "/data/ipfs/config"], stderr=subprocess.PIPE).decode())
+        ##In [44]: __id["Identity"]["PrivKey"]
+
+
+        print ("generate ipfs address has been clicked")
 
     def disconnect(self):
         self.manager.transition = SlideTransition(direction="right")
