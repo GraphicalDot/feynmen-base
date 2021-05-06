@@ -22,7 +22,7 @@ enum34==1.1.6
 Fabric3==1.14.post1
 Faker==0.8.15
 Flask==1.0.2
-Flask-Cors==3.0.4
+Flask-Cors==3.0.9
 Flask-RESTful==0.3.6
 gunicorn==19.8.1
 humanfriendly==4.12.1
